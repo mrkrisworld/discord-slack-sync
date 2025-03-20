@@ -50,7 +50,8 @@ slackApp.event("message", async ({ event, client }) => {
 discordClient.on("messageCreate", async (message) => {
     try {
         //if (message.author.bot) return; // Ignore bot messages
-        if (message.author.id === discordClient.user.id) return; // Ignore only this bot's messages
+        if (message.author.id === discordClient.user.id
+        || message.channel.id !== process.env.DISCORD_CHANNEL_ID) return; // Ignore only this bot's messages
 
         await slackApp.client.chat.postMessage({
             channel: process.env.SLACK_CHANNEL_ID,
