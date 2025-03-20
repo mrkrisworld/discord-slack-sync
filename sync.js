@@ -28,7 +28,10 @@ discordClient.login(process.env.DISCORD_BOT_TOKEN);
 // Slack Message Event Listener
 slackApp.event("message", async ({ event, client }) => {
     try {
-        if (!event.text || event.subtype === "bot_message") return;
+        if (!event.text
+            || event.subtype === "bot_message"
+            || event.bot_id
+            || event.channel !== process.env.SLACK_CHANNEL_ID) return;
 
         const userInfo = await client.users.info({ user: event.user });
         const username = userInfo.user.real_name || userInfo.user.name;
